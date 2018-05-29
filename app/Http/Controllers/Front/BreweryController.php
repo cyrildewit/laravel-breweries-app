@@ -14,6 +14,7 @@ class BreweryController extends Controller
     public function index(Request $request)
     {
         $radius = $request->input('radius') ?? 10;
+        $userLocation = null;
 
         if ($search = $request->input('search')) {
             $userLocation = Geocoder::getCoordinatesForAddress($search);
@@ -40,33 +41,4 @@ class BreweryController extends Controller
             'userLocation' => $userLocation,
         ]);
     }
-
-    // protected function
-
-    // public function index(Request $request)
-    // {
-    //     $search = $request->input('search');
-    //     $radius = $request->input('radius') ?? 10;
-
-    //     $userLocation = Geocoder::getCoordinatesForAddress($search);
-
-    //     $string = "SELECT id, name, ( 6371 * acos( cos( radians(?) ) *
-    //     cos( radians( lat ) ) * cos( radians( lng ) - radians(?) ) + sin( radians(?) ) * sin( radians( lat ) ) ) )
-    //     AS distance FROM breweries HAVING distance < ? ORDER BY distance LIMIT 0 , 20;";
-    //     $args = [$userLocation['lat'], $userLocation['lng'], $userLocation['lat'], $radius];
-
-    //     $data = DB::select($string, $args);
-
-    //     dd(
-    //         $data
-    //     );
-
-    //     return view('front.brewery.index');
-    // }
-
-    // dd(
-    //         DistanceMatrix::addOrigin($search)
-    //             ->addDestination('Monnickendam')
-    //             ->request()
-    //     );
 }
